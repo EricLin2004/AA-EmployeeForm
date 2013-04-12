@@ -1,0 +1,99 @@
+<h1>New Employee Details</h1>
+<% all_employees = EmployeeProfile.all %>
+<%= form_for(@employee, html: {multipart: true}) do |f| %>
+	<p>Supervisor</p>
+	<label>
+		<select name="employee[supervisor_id]">
+			<option value=''>None</option>
+			<% all_employees.each do |emp| %>
+				<% if @employee.supervisor == emp.employee %>			
+					<option value=<%= emp.id %> selected><%=emp.name%></option>
+				<% else %>
+					<option value=<%= emp.id %>><%=emp.name%></option>
+				<% end %>
+			<% end %>
+		</select>
+	</label>
+
+	<h4>Part of the following teams</h4>
+	<% Team.all.each do |team| %>
+		<label>
+			<%= team.name %>
+			<% if @employee.teams.include?(team) %>
+				<input type="checkbox" name="employee[team_ids][]" value=<%= team.id %> checked>
+			<% else %>
+				<input type="checkbox" name="employee[team_ids][]" value=<%= team.id %> >
+			<% end %>
+		</label>
+		<label> Team Leader
+			<% if @employee.supervised_teams.include?(team) %>
+				<input type="checkbox" name="employee[supervised_team_ids][]" value=<%= team.id %> checked>
+			<% else %>
+				<input type="checkbox" name="employee[supervised_team_ids][]" value=<%= team.id %>>
+			<% end %>
+		</label>
+		<br><br>
+	<% end %>
+
+	<br><br>
+	<label>
+		Name
+		<input type="text" name="employee[employee_profile_attributes][name]" value=<%= @employee.employee_profile.name %>>
+	</label>
+
+	<br><br>
+	<label>
+		E-mail
+		<input type="text" name="employee[employee_profile_attributes][email]" value=<%= @employee.employee_profile.email %>>
+	</label>
+
+	<br><br>
+	<label>
+		Position
+		<input type="text" name="employee[employee_profile_attributes][position]" value=<%= @employee.employee_profile.position %>>
+	</label>
+
+	<br><br>
+	<label>
+		Salary
+		<input type="number" name="employee[employee_profile_attributes][salary]" value=<%= @employee.employee_profile.salary %>>
+	</label>
+
+	<br><br>
+	<label>
+		Height
+		<input type="number" name="employee[employee_profile_attributes][height]" value=<%= @employee.employee_profile.height %>>
+	</label>
+
+	<br><br>
+	<label>
+		Favorite Food
+		<input type="text" name="employee[employee_profile_attributes][favorite_food]" value=<%= @employee.employee_profile.favorite_food %>>
+	</label>
+
+	<br><br>
+	<label>
+		Favorite Day
+		<input type="text" name="employee[employee_profile_attributes][favorite_day]" value=<%= @employee.employee_profile.favorite_day %>>
+	</label>
+
+	<br><br>
+	<label>
+		Age
+		<input type="number" name="employee[employee_profile_attributes][age]" value=<%= @employee.employee_profile.age %>>
+	</label>
+
+	<br><br>
+	
+	<%= f.fields_for(:employee_profile) do |profile_form| %>
+		<%=profile_form.label :birth_date %>
+		<%=profile_form.date_select :birth_date, value: @employee.employee_profile.birth_date %>
+
+		<br><br>
+	 	<%= profile_form.label :photo, "Attach a Photo" %><br />
+	  	<%= profile_form.file_field :photo %>
+	<% end %>
+	<br><br>
+
+	<%=f.submit %>
+<% end %>

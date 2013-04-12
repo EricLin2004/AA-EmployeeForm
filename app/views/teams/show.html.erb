@@ -1,0 +1,18 @@
+<h1> <%= @team.name %>'s Details </h1>
+
+<h3>Leader:</h3>
+
+<% if @team.supervisor_id.nil? %>
+	<%= "None" %>
+<% else %>
+	<%= Employee.find(@team.supervisor_id).employee_profile.name %>
+<% end %>
+
+<h3>Members:</h3>
+<ul>
+	<% @team.members.each do |member| %>
+		<li><%= member.employee_profile.name %></li>
+	<% end %>
+</ul>
+
+<%=link_to "Edit Team", edit_team_url(@team) %>

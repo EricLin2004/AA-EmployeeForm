@@ -1,0 +1,28 @@
+<h1>New Team Details</h1>
+<% all_employees = EmployeeProfile.all %>
+<%= form_for(@team) do |f| %>
+	<%= f.label :name %>
+	<%= f.text_field :name %>
+	<br><br>
+	<p>Supervisor</p>
+	<label>
+		<select name="team[supervisor_id]">
+			<% all_employees.each do |emp| %>
+				<option value=<%= emp.id %>><%=emp.name%></option>
+			<% end %>
+		</select>
+	</label>
+	<br><br>
+
+	<p>Members</p>
+	<% all_employees.each do |emp| %>
+		<label>
+			<%= emp.name %>
+			<input type="checkbox" name="team[member_ids][]" value=<%= emp.id %>><br>
+		</label>
+	<% end %>
+	<input type="hidden" name="team[member_ids][]" value=''>
+	
+	<br><br>
+	<%= f.submit %>
+<% end %>

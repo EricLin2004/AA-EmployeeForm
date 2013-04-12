@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AppEmployee</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<ul>
+	<% unless flash[:errors].nil? %>
+		<% flash[:errors].each do |err| %>
+			<li><%= err %></li>
+		<% end %>
+	<% end %>
+</ul>
+<%= flash[:success] %>
+<%= yield %>
+
+<br><br>
+Nav 
+<%=link_to "Home", root_url %>
+<%=link_to "Teams", teams_url %>
+</body>
+</html>

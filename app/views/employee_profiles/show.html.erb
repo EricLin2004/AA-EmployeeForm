@@ -1,0 +1,51 @@
+<h1> <%= @profile.name %>'s Details</h1>
+<%= @profile.email %>
+
+<h4> Supervisor: </h4>
+<% if @profile.employee.supervisor.nil? %>
+	None
+<% else %>
+	<%= @profile.employee.supervisor.employee_profile.name %>
+<% end %>
+
+<h4>Team Leader of:</h4>
+<ul>
+	<% @profile.employee.supervised_teams.each do |team| %>
+		<li><%= team.name %></li>
+	<% end %>
+</ul>
+<h3>Team Member of:</h3>
+<ul>
+	<% @profile.employee.teams.each do |team| %>
+		<%= team.name %>
+	<% end %>
+</ul>
+
+<h3>Position</h3>
+<%= @profile.position %>
+
+<h3>Salary</h3>
+<%= sprintf("%.2f", @profile.salary) %>
+
+<h3>Employee ID</h3>
+<%= @profile.employee_id %>
+
+<h3>Height</h3>
+<%= @profile.height %>cm
+
+<h3>Favorite Food</h3>
+<%= @profile.favorite_food %>
+
+<h3>Favorite Day</h3>
+<%= @profile.favorite_day %>
+
+<h3>Age</h3>
+<%= @profile.age %>
+
+<h3>Birth Date</h3>
+<%= @profile.birth_date %>
+
+<h3>Photo</h3>
+<%= image_tag @profile.photo.url %>
+<br><br>
+<%= link_to "Edit Details", edit_employee_url(@profile.employee) %>

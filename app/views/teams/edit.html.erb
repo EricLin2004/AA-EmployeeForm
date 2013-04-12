@@ -1,0 +1,38 @@
+<h1>Edit Team Details</h1>
+
+<% all_employees = EmployeeProfile.all %>
+<%= form_for(@team) do |f| %>
+	<%= f.label :name %>
+	<%= f.text_field :name %>
+	<br><br>
+
+	<p>Supervisor</p>
+	<label>
+		<select name="team[supervisor_id]">
+			<% all_employees.each do |emp| %>
+				<% if emp.employee_id == @team.supervisor_id %>
+					<option value=<%= emp.id %> selected><%=emp.name%></option>
+				<% else %>
+					<option value=<%= emp.id %>><%=emp.name%></option>	
+				<% end %>			
+			<% end %>
+		</select>
+	</label>
+	<br><br>
+
+	<p>Members</p>
+	<% all_employees.each do |emp| %>
+		<label>
+			<%= emp.name %>
+			<% if emp.employee.teams.include?(@team) %>
+				<input type="checkbox" name="team[member_ids][]" value=<%= emp.id %> checked><br>
+			<% else %>
+				<input type="checkbox" name="team[member_ids][]" value=<%= emp.id %> ><br>
+			<% end %>
+		</label>
+	<% end %>
+	<input type="hidden" name="team[member_ids][]" value='' %>
+
+	<br><br>
+	<%= f.submit %>
+<% end %>

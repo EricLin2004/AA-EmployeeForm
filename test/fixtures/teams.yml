@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  memberships: 1
+  members: 1
+
+two:
+  memberships: 1
+  members: 1

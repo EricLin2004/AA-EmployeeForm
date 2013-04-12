@@ -1,0 +1,10 @@
+<h1>Teams</h1>
+
+<ul>
+	<% Team.all.each do |team| %>
+		<li><%= link_to "#{team.name}", team %></li>
+	<% end %>
+</ul>
+
+<br><br>
+<%= link_to "Add Team!", new_team_url %>
